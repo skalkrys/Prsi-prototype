@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="cs">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Prší — prototyp (hot-seat)</title>
+  <link rel="manifest" href="manifest.json">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header><h1>Prší — prototyp (hot-seat)</h1></header>
+
+  <main>
+    <section id="menu">
+      <label>Počet hráčů:
+        <select id="playerCount"><option>2</option><option>3</option><option>4</option></select>
+      </label>
+      <button id="startBtn">Nová hra</button>
+    </section>
+
+    <section id="game" class="hidden">
+      <div id="infoBar">
+        <span id="turnInfo"></span>
+        <span id="deckInfo">Balíček: <span id="deckCount">0</span></span>
+        <button id="passBtn">Předat zařízení</button>
+      </div>
+
+      <div id="board">
+        <div id="discard" class="card back">?</div>
+        <div id="deck" class="card back">Balík</div>
+      </div>
+
+      <div id="playersArea"></div>
+
+      <div id="handArea">
+        <h3>Tvá ruka</h3>
+        <div id="hand"></div>
+        <div id="actions">
+          <button id="drawBtn">Líznout</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- volba barvy (spodek / spodek jako J) -->
+    <div id="suitOverlay" class="overlay hidden">
+      <div class="overlayBox">
+        <p>Vyber barvu:</p>
+        <div id="suitChoices"></div>
+      </div>
+    </div>
+
+    <!-- overlay pro předání zařízení -->
+    <div id="passOverlay" class="overlay hidden">
+      <div class="overlayBox">
+        <p id="passText">Předat zařízení...</p>
+        <button id="okPassBtn">OK</button>
+      </div>
+    </div>
+
+  </main>
+
+  <script src="script.js" defer></script>
+</body>
+</html>

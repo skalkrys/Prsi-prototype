@@ -39,3 +39,13 @@ function loadTest() {
 // Spuštění
 saveTest();
 loadTest();
+// Multiplayer - generování kódu hry
+function createGameId() {
+    return Math.random().toString(36).substring(2, 8).toUpperCase();
+}
+
+// Tlačítko pro založení hry
+document.getElementById("new-game").addEventListener("click", () => {
+    const gameId = createGameId();
+    alert("Tvůj kód hry je: " + gameId);
+});

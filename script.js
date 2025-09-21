@@ -1,14 +1,15 @@
-// Prší - základní textová verze
+// Prší - s pravidly
 
-// Balíček karet (32 karet)
 const suits = ["♠", "♥", "♦", "♣"];
 const values = ["7", "8", "9", "10", "J", "Q", "K", "A"];
 let deck = [];
 let players = [];
 let discardPile = [];
 let currentPlayer = 0;
+let skipNext = false; // pro eso
+let drawTwo = false;  // pro sedmu
+let chooseSuit = null; // pro spodka
 
-// HTML prvky
 const output = document.createElement("div");
 document.body.appendChild(output);
 
@@ -18,14 +19,10 @@ function initGame(numPlayers = 2) {
 
   players = [];
   for (let i = 0; i < numPlayers; i++) {
-    players.push({
-      hand: deck.splice(0, 5) // každému 5 karet
-    });
+    players.push({ hand: deck.splice(0, 5) });
   }
 
-  // první karta na odhazovací hromádku
   discardPile = [deck.pop()];
-
   currentPlayer = 0;
   render();
 }
@@ -51,10 +48,28 @@ function playCard(playerIndex, cardIndex) {
   let card = players[playerIndex].hand[cardIndex];
   let top = discardPile[discardPile.length - 1];
 
-  // jednoduché pravidlo: můžeš zahrát pokud se shoduje barva nebo hodnota
-  if (card[card.length - 1] === top[top.length - 1] || card.slice(0, -1) === top.slice(0, -1)) {
+  if (
+    card[card.length - 1] === top[top.length - 1] ||
+    card.slice(0, -1) === top.slice(0, -1) ||
+    chooseSuit === card[card.length - 1]
+  ) {
     discardPile.push(card);
     players[playerIndex].hand.splice(cardIndex, 1);
+    chooseSuit = null;
+
+    // Zvláštní efekty
+    if (card.startsWith("7")) drawTwo = true;
+    if (card.startsWith("A")) skipNext = true;
+    if (card.startsWith("J")) {
+      chooseSuit = prompt("Vyber barvu: ♠ ♥ ♦ ♣");
+    }
+
+    if (players[playerIndex].hand.length === 0) {
+      alert("Hráč " + (playerIndex + 1) + " vyhrál!");
+      initGame(players.length);
+      return;
+    }
+
     nextPlayer();
   } else {
     alert("Tuto kartu nemůžeš zahrát!");
@@ -63,17 +78,33 @@ function playCard(playerIndex, cardIndex) {
 }
 
 function drawCard(playerIndex) {
-  if (deck.length === 0) {
-    alert("Balíček je prázdný!");
-    return;
+  if (deck.length === 0) reshuffle();
+
+  let cardsToDraw = drawTwo ? 2 : 1;
+  drawTwo = false;
+
+  for (let i = 0; i < cardsToDraw; i++) {
+    players[playerIndex].hand.push(deck.pop());
   }
-  players[playerIndex].hand.push(deck.pop());
+
   nextPlayer();
   render();
 }
 
+function reshuffle() {
+  let top = discardPile.pop();
+  deck = discardPile;
+  discardPile = [top];
+  shuffle(deck);
+}
+
 function nextPlayer() {
   currentPlayer = (currentPlayer + 1) % players.length;
+
+  if (skipNext) {
+    skipNext = false;
+    currentPlayer = (currentPlayer + 1) % players.length;
+  }
 }
 
 function render() {
@@ -84,14 +115,16 @@ function render() {
   output.appendChild(info);
 
   let topCard = document.createElement("p");
-  topCard.textContent = "Na stole: " + discardPile[discardPile.length - 1];
+  topCard.textContent =
+    "Na stole: " +
+    discardPile[discardPile.length - 1] +
+    (chooseSuit ? " (zvolená barva: " + chooseSuit + ")" : "");
   output.appendChild(topCard);
 
   let hand = document.createElement("div");
   hand.textContent = "Tvoje karty: " + players[currentPlayer].hand.join(", ");
   output.appendChild(hand);
 
-  // tlačítka pro zahrání karty
   players[currentPlayer].hand.forEach((card, index) => {
     let btn = document.createElement("button");
     btn.textContent = "Zahrát " + card;
@@ -99,12 +132,10 @@ function render() {
     output.appendChild(btn);
   });
 
-  // tlačítko pro líznutí
   let drawBtn = document.createElement("button");
-  drawBtn.textContent = "Líznout kartu";
+  drawBtn.textContent = drawTwo ? "Líznout 2 karty" : "Líznout kartu";
   drawBtn.onclick = () => drawCard(currentPlayer);
   output.appendChild(drawBtn);
 }
 
-// spusť hru pro 2 hráče
 initGame(2);

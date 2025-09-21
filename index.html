@@ -2,32 +2,13 @@
 <html lang="cs">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Prší - prototyp</title>
-  <link rel="stylesheet" href="style.css">
-  <link rel="manifest" href="manifest.json">
+  <title>Prší online - test Firebase</title>
 </head>
 <body>
-  <h1>Prší - prototyp (hot-seat)</h1>
+  <h1>Prší online - Firebase test</h1>
+  <p>Otevři konzoli (F12 → Console), tam se ukáže výsledek testu.</p>
 
-  <div id="menu">
-    <label>Počet hráčů:
-      <select id="playerCount">
-        <option value="2">2</option>
-        <option value="3">3</option>
-        <option value="4">4</option>
-      </select>
-    </label>
-    <button onclick="startGame()">Nová hra</button>
-  </div>
-
-  <div id="game" style="display:none;">
-    <h2 id="playerTurn"></h2>
-    <div id="hand"></div>
-    <h3>Odhazovací balíček:</h3>
-    <div id="discard"></div>
-  </div>
-
-  <script src="script.js"></script>
+  <!-- Připojení kódu -->
+  <script type="module" src="script.js"></script>
 </body>
 </html>

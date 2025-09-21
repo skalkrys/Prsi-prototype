@@ -1,34 +1,26 @@
-:root{
-  --card-w: 64px;
-  --card-h: 96px;
-  --accent: #2b7cff;
+body {
+  font-family: Arial, sans-serif;
+  text-align: center;
+  margin: 20px;
 }
-*{box-sizing:border-box}
-body{
-  font-family:system-ui,Segoe UI,Roboto,Helvetica,Arial;
-  margin:0;padding:12px;background:#f5f7fb;color:#111;
+
+#hand {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin: 10px 0;
 }
-header h1{margin:0 0 12px 0;font-size:18px}
-.hidden{display:none}
-#menu{margin-bottom:12px}
-#infoBar{display:flex;gap:12px;align-items:center;margin-bottom:8px}
-#board{display:flex;gap:12px;align-items:center;margin-bottom:8px}
-.card{
-  width:var(--card-w);
-  height:var(--card-h);
-  border-radius:8px;
-  box-shadow:0 2px 6px rgba(0,0,0,0.15);
-  display:inline-flex;align-items:center;justify-content:center;
-  font-weight:700;font-size:16px;background:white;border:1px solid #ddd;
-  user-select:none;margin:4px;
+
+.card {
+  border: 1px solid black;
+  border-radius: 5px;
+  padding: 10px;
+  margin: 5px;
+  width: 50px;
+  height: 70px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: white;
+  cursor: pointer;
 }
-.back{background:linear-gradient(180deg,#ddd,#bbb);color:#333}
-#playersArea{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:8px}
-.playerBox{padding:8px;background:#fff;border:1px solid #eee;border-radius:8px;min-width:120px}
-#hand{display:flex;gap:8px;flex-wrap:wrap}
-.card.playable{outline:3px solid #8fd; transform:translateY(-3px); cursor:pointer}
-#actions{margin-top:8px}
-button{padding:8px 10px;border-radius:8px;border:1px solid #bbb;background:white;cursor:pointer}
-.overlay{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.45);display:flex;align-items:center;justify-content:center}
-.overlayBox{background:#fff;padding:16px;border-radius:10px;min-width:220px;text-align:center}
-#suitChoices button{margin:6px;font-size:20px;padding:8px 10px}
